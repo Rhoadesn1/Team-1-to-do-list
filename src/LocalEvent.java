@@ -49,6 +49,10 @@ public class LocalEvent {
         this.setDescription(description);
     }
     
+    public void saveEvent(){
+    
+    }
+    
     @Override
     public String toString(){
     return "At: " + this.getDate() + " " + this.getDescription();
