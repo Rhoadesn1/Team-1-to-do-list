@@ -25,10 +25,10 @@ public class MainClass extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Gui.fxml"));
         
-        Scene scene = new Scene(root);
-        stage.setTitle("To-Do List");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(root); // creates a new scene
+        stage.setTitle("To-Do List"); // sets the title of the application
+        stage.setScene(scene); // sets the scene
+        stage.show(); // opens the stage/ GUI
         
         
    

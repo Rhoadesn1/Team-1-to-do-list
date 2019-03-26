@@ -16,21 +16,26 @@ import javafx.stage.Stage;
  */
 public class onStart {
     
-    public onStart()
+    public onStart() // this class is called on start. If you need to add something upon launch. DO IT HERE
     {
     
-     FileChooser firstFileChooser = new FileChooser();
+     FileChooser firstFileChooser = new FileChooser(); // creates a filechooser
      
-     File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records");
+     File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records"); // creates a directory if the directory doesnt exist already
 if (! recordsDir.exists()) {
     recordsDir.mkdirs();
 }
-       firstFileChooser.setTitle("Load Dialog");
-       firstFileChooser.getTitle();
-     firstFileChooser.setInitialDirectory(recordsDir);
-     File file = firstFileChooser.showOpenDialog(new Stage());
+       firstFileChooser.setTitle("Load Dialog"); // generic load dialog
+       firstFileChooser.getTitle(); 
+     firstFileChooser.setInitialDirectory(recordsDir); // sets directory to the one we created
+     File file = firstFileChooser.showOpenDialog(new Stage()); // opens the load file stage/ window
     
-     firstFileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text file", "*.txt"));
+     firstFileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text file", "*.txt")); // allows users to only open txt files
+     
+     
+     
+     
+     
      
     }
     

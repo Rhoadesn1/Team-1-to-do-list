@@ -9,53 +9,81 @@
  * @author Nicholas Rhoades
  */
 import java.time.LocalDate;
+import java.util.Date;
 
-public class LocalEvent {
-    private String description;
-    private LocalDate date;
+public class LocalEvent { // Basic event class that gets called when adding events
+    private String description; // intializing description variable
+    private LocalDate date; // initializing the localdate variable
+    private Date ldate;  // initializing the Date variable
 
     /**
      * @return the description
      */
-    public String getDescription() {
+    public String getDescription() { // getting description
         return description;
     }
 
     /**
      * @param description the description to set
      */
-    public void setDescription(String description) {
+    public void setDescription(String description) { // setting description
         this.description = description;
     }
 
     /**
      * @return the date
      */
-    public LocalDate getDate() {
+    public LocalDate getDate() { // getting local date
         return date;
     }
 
     /**
      * @param date the date to set
      */
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDate date) { //setting local date
         this.date = date;
     }
     
+     public Date getlDate() { //getting date
+        return ldate;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setlDate(Date ldate) { // setting date
+        this.ldate = ldate;
+    }
     
-    public LocalEvent(LocalDate date, String description){
+    
+    
+    public LocalEvent(LocalDate date, String description){ // Local event class that has the parameters LocalDate, and String
     
         this.setDate(date);
         this.setDescription(description);
     }
     
+     public LocalEvent(Date ldate, String description){ // Local event class that has the parameters Date, and String
+ 
+        this.setlDate(ldate);
+        this.setDescription(description);
+    } 
+      
+    
+    
     public void saveEvent(){
     
     }
     
-    @Override
+    @Override // overriding the toString() method to produce two different results. One for clicking add event and one for loading the event
     public String toString(){
-    return "At: " + this.getDate() + " " + this.getDescription();
+        if (this.getDate() == null) {
+    return "At: " + this.getlDate().toString().substring(0, 10) + " " + this.getDescription();
+        }
+        else return "At: " + this.getDate() + " " + this.getDescription();
     }
+    
+ 
+  
     
 }
