@@ -8,22 +8,37 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane dividerPositions="0.5, 0.5" orientation="VERTICAL" prefHeight="240.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GuiController">
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="240.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GuiController">
    <items>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="943.0">
-         <children>
-            <Button fx:id="addButton" layoutX="6.0" layoutY="4.0" mnemonicParsing="false" onAction="#addEvent" prefHeight="25.0" prefWidth="78.0" text="Add Event" />
-            <DatePicker fx:id="datePicker" layoutX="262.0" layoutY="4.0" prefHeight="25.0" prefWidth="175.0" />
-            <TextField fx:id="descriptionTextField" layoutX="450.0" layoutY="4.0" prefHeight="25.0" prefWidth="489.0" promptText="Add Event Description here..." />
-            <Separator layoutX="89.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="0.0" />
-            <Separator layoutX="442.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="442.0" AnchorPane.topAnchor="0.0" />
-            <Button fx:id="saveButton" layoutX="96.0" layoutY="4.0" mnemonicParsing="false" onAction="#saveList" prefHeight="25.0" prefWidth="71.0" text="Save List" />
-            <Separator layoutX="238.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="238.0" AnchorPane.topAnchor="0.0" />
-            <Button fx:id="loadButton" layoutX="177.0" layoutY="4.0" mnemonicParsing="false" onAction="#loadList" prefHeight="25.0" prefWidth="71.0" text="Load List" />
-            <Separator layoutX="162.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="40.0" prefWidth="24.0" />
-         </children>
-      </AnchorPane>
-      <ListView fx:id="eventList" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteList" text="Delete List" />
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="943.0" />
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <AnchorPane layoutX="39.0" prefHeight="232.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button fx:id="saveButton" layoutX="86.0" layoutY="3.0" mnemonicParsing="false" onAction="#saveList" prefHeight="25.0" prefWidth="72.0" text="Save List" />
+                        <Button fx:id="loadList" layoutX="169.0" layoutY="3.0" mnemonicParsing="false" onAction="#showFile" prefHeight="25.0" prefWidth="99.0" text="Refresh List" />
+                        <Button fx:id="deleteButton" layoutX="1.0" layoutY="3.0" mnemonicParsing="false" onAction="#deleteList" prefHeight="25.0" prefWidth="72.0" text="Delete List" />
+                        <Separator layoutX="1.0" layoutY="33.0" prefHeight="6.0" prefWidth="278.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="33.0" />
+                     </children>
+                  </AnchorPane>
+                  <ListView fx:id="fileList" layoutY="35.0" onMouseClicked="#loadFile" prefHeight="197.0" prefWidth="278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="62.0" prefWidth="659.0">
+               <children>
+                  <AnchorPane layoutY="-2.0" prefHeight="32.0" prefWidth="659.0" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
+                     <children>
+                        <TextField fx:id="descriptionTextField" layoutX="278.0" layoutY="6.0" prefHeight="25.0" prefWidth="374.0" promptText="Add Event Description here..." />
+                        <DatePicker fx:id="datePicker" layoutX="92.0" layoutY="6.0" prefHeight="25.0" prefWidth="175.0" />
+                        <Button fx:id="addButton" layoutX="8.0" layoutY="6.0" mnemonicParsing="false" onAction="#addEvent" prefHeight="25.0" prefWidth="78.0" text="Add Event" />
+                     </children>
+                  </AnchorPane>
+                  <ListView fx:id="eventList" layoutY="35.0" prefHeight="165.0" prefWidth="659.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </items>
 </SplitPane>

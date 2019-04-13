@@ -70,11 +70,6 @@ public class LocalEvent { // Basic event class that gets called when adding even
     } 
       
     
-    
-    public void saveEvent(){
-    
-    }
-    
     @Override // overriding the toString() method to produce two different results. One for clicking add event and one for loading the event
     public String toString(){
         if (this.getDate() == null) {

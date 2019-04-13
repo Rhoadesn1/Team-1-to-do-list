@@ -16,7 +16,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import static java.time.temporal.TemporalQueries.localDate;
+import static java.util.Collections.list;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -46,14 +48,18 @@ import javax.swing.JFileChooser;
 public class GuiController implements Initializable {
   
      FileChooser fileChooser = new FileChooser(); // creates a new fileChooser
-      onStart Start = new onStart(); // calls the OnStart class
       String[] nEvent = new String[50];  // creates a string array of 50 places
         String space = " "; // string to space the datepicker and description strings
+
+    public GuiController() throws FileNotFoundException {
+       
+    }
      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        datePicker.setValue(LocalDate.now()); // sets the datepicker to the current date
-   
+    
+       
     }     // declaring fxml values for the buttons
     @FXML
     Button addButton;
@@ -65,25 +71,117 @@ public class GuiController implements Initializable {
     DatePicker datePicker;
     @FXML
     ListView<LocalEvent> eventList; // delcaring an eventlist
+      ObservableList<LocalEvent> list = FXCollections.observableArrayList();
+       
+    ListView<LocalEvent> newEventList;
+        ObservableList<LocalEvent> newList = FXCollections.observableArrayList();
+  
+    @FXML
+    ListView<String> fileList;
+      ObservableList<String> list2 = FXCollections.observableArrayList();
+    
+
+ 
     
     //creating a list of arrays to store the events
-    ObservableList<LocalEvent> list = FXCollections.observableArrayList();
-    
+  
+  
+     
     
     
     
    
+       
+ 
+    
+   @FXML
+   public void showFile(Event e) throws IOException
+   {
+       
+       list.clear();
+       eventList.setItems(null);
+     File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records"); // creates a directory if the directory doesnt exist already
+if (! recordsDir.exists()) {
+    recordsDir.mkdirs();
+}
+
+    File fileNames = new File("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt");
+    if (! fileNames.exists())
+    {
+   if (fileNames.createNewFile())
+   {
+       System.out.println("File has been created.");
+   }
+  
+    }
+    
+    list2.clear();
+     Scanner  fileInput = new Scanner(new FileReader("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt"));
+    // breakloop makes it so you cant keep clicking on the load list menu
+     while (fileInput.hasNextLine())
+     {
+        
+         String s = fileInput.nextLine();
+         list2.add(s);
+     fileList.setItems(list2);
+    
+     }
     
   
+    
+   }
+    
+   @FXML
+    public void loadFile() throws FileNotFoundException, ParseException
+    {
+    list.clear();
+    eventList.getItems().clear();
+    eventList.setItems(list);
+        
+        
+    String fileLocation = "C://Users//Nicholas Rhoades//.To-Do List//records//";
+    String textfile = fileList.getSelectionModel().getSelectedItem();
+    fileLocation = fileLocation + textfile;
+    
+    try {
+    Scanner  fileInput = new Scanner(new FileReader(fileLocation));
+    
+  
+  
+    while (fileInput.hasNext()) // while loop that reads the data from a file/ parses the date into a Date object and then adds the date object and 
+                                //description into an event. It does this until the file has no more output. 
+    {
+        String date;
+        date = fileInput.next();
+
+       
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); //creating the formatter/parser
+         Date date2 = formatter.parse(date); //parsing the date
+        String description = fileInput.nextLine();  // getting the description
+        list.add(new LocalEvent(date2, description)); // creating a localevent with the date and description from the file
+        eventList.setItems(list); // setting the list
+    }
+    fileInput.close();
+    }
+      catch(Exception e) {
+    System.out.println(fileLocation);
+    }
+  
+    
+    
+    }
     
     @FXML
     private void addEvent(Event e) throws ParseException{ // method that adds an event when the user clicks add event
         int i;
         i = 0;
+
+
+if(datePicker.getValue() != null && descriptionTextField.getText()!= null)
     list.add(new LocalEvent(datePicker.getValue(), descriptionTextField.getText()));  // creating new event using current datepicker value and text in 
-    // the description field
-    eventList.setItems(list);
-      
+    eventList.setItems(list); 
+   
+     
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd");  //the input format for the date
             SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-mm-dd"); // the output format for the date
             
@@ -108,27 +206,45 @@ public class GuiController implements Initializable {
     nEvent[i] = together; // when it finds an empty space it will add the event to there.
     }
     Refresh(); // refreshes description and datepicker fields
-  
+
     }
     
     @FXML 
     private void saveList(Event e) throws IOException{ // method that stores the events into an array and then stores the contents of that array into a file
-    Window stage = eventList.getScene().getWindow(); // creating a stage thru the eventList scene and window
+    
+        
+           File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records"); // creates a directory if the directory doesnt exist already
+if (! recordsDir.exists()) {
+    recordsDir.mkdirs();
+}
+
+    File fileNames = new File("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt");
+    if (! fileNames.exists())
+    {
+   if (fileNames.createNewFile())
+   {
+       System.out.println("File has been created.");
+   }
+   else 
+   {
+   System.out.println("File already exists.");
+   }
+    }
+        
+        
+        Window stage = eventList.getScene().getWindow(); // creating a stage thru the eventList scene and window
     fileChooser.setTitle("Save Dialog"); // generic save dialog
     fileChooser.setInitialFileName("My Save"); // generic Initial file name dialog 
     fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text file", "*.txt")); // allowing the user to store list as only a txt file
     int i =0; // declaring and setting the array index to 0
-    File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records"); //setting a directory location
-if (! recordsDir.exists()) { // if directory doesnt exist it will create it on the users comp
-    recordsDir.mkdirs();
-}
+   
      
      fileChooser.setInitialDirectory(recordsDir); //sets the initial directory to the directory we created
      File file = fileChooser.showSaveDialog(stage); // opens the save window
      BufferedWriter out = null; // declaring bufferedwriter variable
       
            
-    try {  // writing to a file
+    try {  // writing all events to a new file
         FileWriter fstream = new FileWriter(file);
           out = new BufferedWriter(fstream);
          
@@ -148,6 +264,12 @@ if (! recordsDir.exists()) { // if directory doesnt exist it will create it on t
             }
         
         
+   FileWriter fstream = new FileWriter("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt", true); //if this file exists append it
+   out = new BufferedWriter(fstream);
+   out.write(file.getName()); //writing the name of the new file to this document
+   out.newLine();
+   out.close();
+  
    
  
     
@@ -158,59 +280,37 @@ if (! recordsDir.exists()) { // if directory doesnt exist it will create it on t
             {
             ex.printStackTrace();
             }
-        
-    }
-    
-    @FXML
-    private void loadList(Event e) throws FileNotFoundException, ParseException{ // When the loadlist button is hit, this method is active. 
-        //It allows the user to choose a list and then load it.
-    
-    Window stage = eventList.getScene().getWindow(); //calling the scene through an action event. i.e. the event list
-    fileChooser.setTitle("Load Dialog"); // generic load dialog
-    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text file", "*.txt")); // This allows the user to only load .txt files
-    
-    
-    File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records");
-if (! recordsDir.exists()) { // checking to see if this directory has been made, if not it will make it. 
-    recordsDir.mkdirs();
-}
-     
-    fileChooser.setInitialDirectory(recordsDir);
-    
-        File file = fileChooser.showOpenDialog(stage);
-    Scanner  fileInput = new Scanner(new FileReader(file));
-    
-  
-    while (fileInput.hasNext()) // while loop that reads the data from a file/ parses the date into a Date object and then adds the date object and 
-                                //description into an event. It does this until the file has no more output. 
-    {
-        String date;
-        date = fileInput.next();
-
+      
+       list2.clear(); //clears the list of all document names
        
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); //creating the formatter/parser
-         Date date2 = formatter.parse(date); //parsing the date
-        String description = fileInput.nextLine();  // getting the description
-        list.add(new LocalEvent(date2, description)); // creating a localevent with the date and description from the file
-        eventList.setItems(list); // setting the list
-    }
-    fileInput.close();
+     Scanner  fileInput = new Scanner(new FileReader("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt"));
     
-    
-    fileChooser.setInitialDirectory(file.getParentFile()); // opon clicking loadlist the directory will open up to the last diretory used
-    
-
+     while (fileInput.hasNextLine())
+     {
         
+         String s = fileInput.nextLine();
+         list2.add(s);
+     fileList.setItems(list2); //loads a new list with all the names of the saved documents
+    
+     }
+    
+  list.clear(); //clears the event list
+ 
+  eventList.getSelectionModel().clearSelection();
+  eventList.getItems().clear();
+  eventList.toString();
+  
+ 
+  
+   
+       
+        Refresh();
     }
+    
     
     @FXML
-    private void deleteList(Event e) throws FileNotFoundException { // When the deletelist button is hit, this method is active. 
-        //It allows the user to choose a list and then delete it.
-    
-    Window stage = eventList.getScene().getWindow(); //calling the scene through an action event. i.e. the event list
-    fileChooser.setTitle("Delete a list Dialog"); // generic delete dialog
-    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text file", "*.txt")); // This allows the user to only delete .txt files
-    
+    private void deleteList(Event e) throws FileNotFoundException, IOException { // When the deletelist button is hit, this method is active. 
+       
     
     File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records");
 if (! recordsDir.exists()) { // checking to see if this directory has been made, if not it will make it. 
@@ -219,7 +319,13 @@ if (! recordsDir.exists()) { // checking to see if this directory has been made,
      
     fileChooser.setInitialDirectory(recordsDir);
     
-        File file = fileChooser.showOpenDialog(stage);
+
+String fileLocation = "C://Users//Nicholas Rhoades//.To-Do List//records//";
+ String textfile = fileList.getSelectionModel().getSelectedItem();
+    fileLocation = fileLocation + textfile; //Gets the selected file name and adds it to the file location. 
+File file = new File(fileLocation);
+        String x = file.getName(); //getting the file name so we can delete it from the list later
+      
         
         if(file.delete()) 
         { 
@@ -230,6 +336,44 @@ if (! recordsDir.exists()) { // checking to see if this directory has been made,
         { 
             System.out.println("Failed to delete the list."); 
         } 
+          BufferedWriter out = null;
+          File tempFile = new File("myTempFile.txt");
+          Scanner  fileInput = new Scanner(new FileReader("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt"));
+         
+                LinkedList<String> LL= new LinkedList<String>();
+        
+             
+    
+    if(!list.isEmpty()){ // clearing the event list if its not empty 
+  list.clear(); 
+  eventList.setItems(list);}
+  list2.remove(x);//removes the name of the deleted list.
+    while (fileInput.hasNextLine())         
+    {
+     String newS = fileInput.nextLine(); //opens the fileNames document and adds all lines to a linkedlist except for the one we just deleted
+        LL.add(newS);
+        System.out.println(x);
+        LL.remove(x); 
+        
+    }
+     FileWriter fstream = new FileWriter("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt", false); //overwrites the old file 
+      out = new BufferedWriter(fstream);
+    
+    while (!LL.isEmpty()){ //loop to pop and store the names from the Linked List until its empty
+        out.write(LL.pop());
+        out.newLine();
+    }
+        out.close();
+       
+    
+    fileInput.close();
+ 
+     list.clear(); //clearing eventlist
+       eventList.getItems().clear();
+       eventList.getSelectionModel().clearSelection();
+       eventList.setItems(list);
+    
+        
         
     }
     
@@ -237,6 +381,9 @@ if (! recordsDir.exists()) { // checking to see if this directory has been made,
     datePicker.setValue(LocalDate.now());
     descriptionTextField.setText(null);
     }
+
+   
+
     
     
     
