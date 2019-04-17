@@ -105,7 +105,7 @@ if (! recordsDir.exists()) {
     recordsDir.mkdirs();
 }
 
-    File fileNames = new File("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt");
+    File fileNames = new File("C://Users//Windows User//.To-Do List//records//fileNames.txt");
     if (! fileNames.exists())
     {
    if (fileNames.createNewFile())
@@ -116,7 +116,7 @@ if (! recordsDir.exists()) {
     }
     
     list2.clear();
-     Scanner  fileInput = new Scanner(new FileReader("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt"));
+     Scanner  fileInput = new Scanner(new FileReader("C://Users//Windows User//.To-Do List//records//fileNames.txt"));
     // breakloop makes it so you cant keep clicking on the load list menu
      while (fileInput.hasNextLine())
      {
@@ -139,7 +139,7 @@ if (! recordsDir.exists()) {
     eventList.setItems(list);
         
         
-    String fileLocation = "C://Users//Nicholas Rhoades//.To-Do List//records//";
+    String fileLocation = "C://Users//Windows User//.To-Do List//records//";
     String textfile = fileList.getSelectionModel().getSelectedItem();
     fileLocation = fileLocation + textfile;
     
@@ -218,7 +218,7 @@ if (! recordsDir.exists()) {
     recordsDir.mkdirs();
 }
 
-    File fileNames = new File("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt");
+    File fileNames = new File("C://Users//Windows User//.To-Do List//records//fileNames.txt");
     if (! fileNames.exists())
     {
    if (fileNames.createNewFile())
@@ -264,7 +264,7 @@ if (! recordsDir.exists()) {
             }
         
         
-   FileWriter fstream = new FileWriter("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt", true); //if this file exists append it
+   FileWriter fstream = new FileWriter("C://Users//Windows User//.To-Do List//records//fileNames.txt", true); //if this file exists append it
    out = new BufferedWriter(fstream);
    out.write(file.getName()); //writing the name of the new file to this document
    out.newLine();
@@ -283,7 +283,7 @@ if (! recordsDir.exists()) {
       
        list2.clear(); //clears the list of all document names
        
-     Scanner  fileInput = new Scanner(new FileReader("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt"));
+     Scanner  fileInput = new Scanner(new FileReader("C://Users//Windows User//.To-Do List//records//fileNames.txt"));
     
      while (fileInput.hasNextLine())
      {
@@ -320,7 +320,7 @@ if (! recordsDir.exists()) { // checking to see if this directory has been made,
     fileChooser.setInitialDirectory(recordsDir);
     
 
-String fileLocation = "C://Users//Nicholas Rhoades//.To-Do List//records//";
+String fileLocation = "C://Users//Windows User//.To-Do List//records//";
  String textfile = fileList.getSelectionModel().getSelectedItem();
     fileLocation = fileLocation + textfile; //Gets the selected file name and adds it to the file location. 
 File file = new File(fileLocation);
@@ -338,7 +338,7 @@ File file = new File(fileLocation);
         } 
           BufferedWriter out = null;
           File tempFile = new File("myTempFile.txt");
-          Scanner  fileInput = new Scanner(new FileReader("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt"));
+          Scanner  fileInput = new Scanner(new FileReader("C://Users//Windows User//.To-Do List//records//fileNames.txt"));
          
                 LinkedList<String> LL= new LinkedList<String>();
         
@@ -356,7 +356,7 @@ File file = new File(fileLocation);
         LL.remove(x); 
         
     }
-     FileWriter fstream = new FileWriter("C://Users//Nicholas Rhoades//.To-Do List//records//fileNames.txt", false); //overwrites the old file 
+     FileWriter fstream = new FileWriter("C://Users//Windows User//.To-Do List//records//fileNames.txt", false); //overwrites the old file 
       out = new BufferedWriter(fstream);
     
     while (!LL.isEmpty()){ //loop to pop and store the names from the Linked List until its empty
