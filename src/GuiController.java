@@ -236,15 +236,27 @@ if (! recordsDir.exists()) {
         
         int i =0; // declaring and setting the array index to 0
     BufferedWriter out = null; // declaring bufferedwriter variable
-   File file = new File(recordsDir, "List1" + ".txt");
+         File file;
+         int increase = 0;
+    if (listName.getText().isEmpty())
+    {
+        file = new File(recordsDir, "List1" + ".txt");
+   increase=1;
 
-
-file = new File(recordsDir, listName.getText() + ".txt" );
-
-
-      
-           
-    try {  // writing all events to a new file
+while(file.exists()){
+     increase++;
+     file = new File(recordsDir, "List" + increase + ".txt");
+}
+    }
+    else{
+        file = new File(recordsDir, listName.getText() + ".txt" );
+    while(file.exists()){
+        increase++;
+        file = new File(recordsDir, listName.getText() + increase + ".txt" );
+            
+    }
+    }
+       try {  // writing all events to a new file
         FileWriter fstream = new FileWriter(file);
           out = new BufferedWriter(fstream);
          
