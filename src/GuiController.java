@@ -69,6 +69,8 @@ public class GuiController implements Initializable {
     TextField descriptionTextField;
     @FXML
     DatePicker datePicker;
+    @FXML 
+    TextField listName;
     @FXML
     ListView<LocalEvent> eventList; // delcaring an eventlist
       ObservableList<LocalEvent> list = FXCollections.observableArrayList();
@@ -235,12 +237,11 @@ if (! recordsDir.exists()) {
         int i =0; // declaring and setting the array index to 0
     BufferedWriter out = null; // declaring bufferedwriter variable
    File file = new File(recordsDir, "List1" + ".txt");
-int increase=1;
 
-while(file.exists()){
-     increase++;
-     file = new File(recordsDir, "List" + increase + ".txt");
-}
+
+file = new File(recordsDir, listName.getText() + ".txt" );
+
+
       
            
     try {  // writing all events to a new file
