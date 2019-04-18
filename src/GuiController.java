@@ -100,12 +100,12 @@ public class GuiController implements Initializable {
        
        list.clear();
        eventList.setItems(null);
-     File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records"); // creates a directory if the directory doesnt exist already
+     File recordsDir = new File("C://Users/Public/Documents/.To-Do List/records"); // creates a directory if the directory doesnt exist already
 if (! recordsDir.exists()) {
     recordsDir.mkdirs();
 }
 
-    File fileNames = new File("C://Users//Windows User//.To-Do List//records//fileNames.txt");
+    File fileNames = new File("C://Users//Public//Documents//.To-Do List//records//fileNames.txt");
     if (! fileNames.exists())
     {
    if (fileNames.createNewFile())
@@ -116,7 +116,7 @@ if (! recordsDir.exists()) {
     }
     
     list2.clear();
-     Scanner  fileInput = new Scanner(new FileReader("C://Users//Windows User//.To-Do List//records//fileNames.txt"));
+     Scanner  fileInput = new Scanner(new FileReader("C://Users//Public//Documents//.To-Do List//records//fileNames.txt"));
     // breakloop makes it so you cant keep clicking on the load list menu
      while (fileInput.hasNextLine())
      {
@@ -139,7 +139,7 @@ if (! recordsDir.exists()) {
     eventList.setItems(list);
         
         
-    String fileLocation = "C://Users//Windows User//.To-Do List//records//";
+    String fileLocation = "C://Users//Public//Documents//.To-Do List//records//";
     String textfile = fileList.getSelectionModel().getSelectedItem();
     fileLocation = fileLocation + textfile;
     
@@ -212,13 +212,13 @@ if(datePicker.getValue() != null && descriptionTextField.getText()!= null)
     @FXML 
     private void saveList(Event e) throws IOException{ // method that stores the events into an array and then stores the contents of that array into a file
     
-        
-           File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records"); // creates a directory if the directory doesnt exist already
+        //C:\Users\Public\Documents
+           File recordsDir = new File("C://Users/Public/Documents/.To-Do List/records"); // creates a directory if the directory doesnt exist already
 if (! recordsDir.exists()) {
     recordsDir.mkdirs();
 }
 
-    File fileNames = new File("C://Users//Windows User//.To-Do List//records//fileNames.txt");
+    File fileNames = new File("C://Users//Public//Documents//.To-Do List//records//fileNames.txt");
     if (! fileNames.exists())
     {
    if (fileNames.createNewFile())
@@ -232,16 +232,15 @@ if (! recordsDir.exists()) {
     }
         
         
-        Window stage = eventList.getScene().getWindow(); // creating a stage thru the eventList scene and window
-    fileChooser.setTitle("Save Dialog"); // generic save dialog
-    fileChooser.setInitialFileName("My Save"); // generic Initial file name dialog 
-    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text file", "*.txt")); // allowing the user to store list as only a txt file
-    int i =0; // declaring and setting the array index to 0
-   
-     
-     fileChooser.setInitialDirectory(recordsDir); //sets the initial directory to the directory we created
-     File file = fileChooser.showSaveDialog(stage); // opens the save window
-     BufferedWriter out = null; // declaring bufferedwriter variable
+        int i =0; // declaring and setting the array index to 0
+    BufferedWriter out = null; // declaring bufferedwriter variable
+   File file = new File(recordsDir, "List1" + ".txt");
+int increase=1;
+
+while(file.exists()){
+     increase++;
+     file = new File(recordsDir, "List" + increase + ".txt");
+}
       
            
     try {  // writing all events to a new file
@@ -264,7 +263,7 @@ if (! recordsDir.exists()) {
             }
         
         
-   FileWriter fstream = new FileWriter("C://Users//Windows User//.To-Do List//records//fileNames.txt", true); //if this file exists append it
+   FileWriter fstream = new FileWriter("C://Users//Public//Documents//.To-Do List//records//fileNames.txt", true); //if this file exists append it
    out = new BufferedWriter(fstream);
    out.write(file.getName()); //writing the name of the new file to this document
    out.newLine();
@@ -283,7 +282,7 @@ if (! recordsDir.exists()) {
       
        list2.clear(); //clears the list of all document names
        
-     Scanner  fileInput = new Scanner(new FileReader("C://Users//Windows User//.To-Do List//records//fileNames.txt"));
+     Scanner  fileInput = new Scanner(new FileReader("C://Users//Public//Documents//.To-Do List//records//fileNames.txt"));
     
      while (fileInput.hasNextLine())
      {
@@ -312,7 +311,8 @@ if (! recordsDir.exists()) {
     private void deleteList(Event e) throws FileNotFoundException, IOException { // When the deletelist button is hit, this method is active. 
        
     
-    File recordsDir = new File(System.getProperty("user.home"), ".To-Do List/records");
+    File recordsDir = new File("C://"
+            + "Users/Public/.To-Do List/records");
 if (! recordsDir.exists()) { // checking to see if this directory has been made, if not it will make it. 
     recordsDir.mkdirs();
 }
@@ -320,7 +320,7 @@ if (! recordsDir.exists()) { // checking to see if this directory has been made,
     fileChooser.setInitialDirectory(recordsDir);
     
 
-String fileLocation = "C://Users//Windows User//.To-Do List//records//";
+String fileLocation = "C://Users//Public//Documents//.To-Do List//records//";
  String textfile = fileList.getSelectionModel().getSelectedItem();
     fileLocation = fileLocation + textfile; //Gets the selected file name and adds it to the file location. 
 File file = new File(fileLocation);
@@ -338,7 +338,7 @@ File file = new File(fileLocation);
         } 
           BufferedWriter out = null;
           File tempFile = new File("myTempFile.txt");
-          Scanner  fileInput = new Scanner(new FileReader("C://Users//Windows User//.To-Do List//records//fileNames.txt"));
+          Scanner  fileInput = new Scanner(new FileReader("C://Users//Public//Documents//.To-Do List//records//fileNames.txt"));
          
                 LinkedList<String> LL= new LinkedList<String>();
         
@@ -356,7 +356,7 @@ File file = new File(fileLocation);
         LL.remove(x); 
         
     }
-     FileWriter fstream = new FileWriter("C://Users//Windows User//.To-Do List//records//fileNames.txt", false); //overwrites the old file 
+     FileWriter fstream = new FileWriter("C://Users//Public//Documents//.To-Do List//records//fileNames.txt", false); //overwrites the old file 
       out = new BufferedWriter(fstream);
     
     while (!LL.isEmpty()){ //loop to pop and store the names from the Linked List until its empty
