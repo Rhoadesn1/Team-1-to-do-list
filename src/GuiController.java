@@ -119,7 +119,7 @@ if (! recordsDir.exists()) {
     
     list2.clear();
      Scanner  fileInput = new Scanner(new FileReader("C://Users//Public//Documents//.To-Do List//records//fileNames.txt"));
-    // breakloop makes it so you cant keep clicking on the load list menu
+  
      while (fileInput.hasNextLine())
      {
         
@@ -128,7 +128,7 @@ if (! recordsDir.exists()) {
      fileList.setItems(list2);
     
      }
-    
+   
   
     
    }
@@ -136,9 +136,7 @@ if (! recordsDir.exists()) {
    @FXML
     public void loadFile() throws FileNotFoundException, ParseException
     {
-    list.clear();
-    eventList.getItems().clear();
-    eventList.setItems(list);
+  list.clear();
         
         
     String fileLocation = "C://Users//Public//Documents//.To-Do List//records//";
@@ -169,7 +167,7 @@ if (! recordsDir.exists()) {
     System.out.println(fileLocation);
     }
   
-    
+    fileList.refresh();
     
     }
     
@@ -307,13 +305,17 @@ while(file.exists()){
      }
     
   list.clear(); //clears the event list
+ list.removeAll();
+ eventList.getItems().removeAll();
+  eventList.setItems(null);
+  eventList.refresh();
+  int aIndex =0;
+ while(aIndex != 49)
+ {
+ nEvent[aIndex] = null;
+ aIndex = aIndex + 1;
+ }
  
-  eventList.getSelectionModel().clearSelection();
-  eventList.getItems().clear();
-  eventList.toString();
-  
- 
-  
    
        
         Refresh();
@@ -382,10 +384,9 @@ File file = new File(fileLocation);
     fileInput.close();
  
      list.clear(); //clearing eventlist
-       eventList.getItems().clear();
+       eventList.getItems().clear(); 
        eventList.getSelectionModel().clearSelection();
        eventList.setItems(list);
-    
         
         
     }
@@ -393,6 +394,7 @@ File file = new File(fileLocation);
     private void Refresh(){ // Void variable that refreshes the description box and the localdate
     datePicker.setValue(LocalDate.now());
     descriptionTextField.setText(null);
+    listName.setText(null);
     }
 
    
