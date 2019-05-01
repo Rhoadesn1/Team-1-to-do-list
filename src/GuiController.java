@@ -81,7 +81,7 @@ public class GuiController implements Initializable {
     @FXML
     ListView<String> fileList;
       ObservableList<String> list2 = FXCollections.observableArrayList();
-    
+    int increase = 0;
 
  
     
@@ -124,12 +124,13 @@ if (! recordsDir.exists()) {
      {
         
          String s = fileInput.nextLine();
-         list2.add(s);
+        String f = s.substring(0, s.length()-4);
+         list2.add(f);
      fileList.setItems(list2);
     
      }
    
-  
+  Refresh();
     
    }
     
@@ -140,7 +141,7 @@ if (! recordsDir.exists()) {
         
         
     String fileLocation = "C://Users//Public//Documents//.To-Do List//records//";
-    String textfile = fileList.getSelectionModel().getSelectedItem();
+    String textfile = fileList.getSelectionModel().getSelectedItem() + ".txt";
     fileLocation = fileLocation + textfile;
     
     try {
@@ -235,16 +236,18 @@ if (! recordsDir.exists()) {
         int i =0; // declaring and setting the array index to 0
     BufferedWriter out = null; // declaring bufferedwriter variable
          File file;
-         int increase = 0;
+         increase = 0;
     if (listName.getText().isEmpty())
     {
         file = new File(recordsDir, "List1" + ".txt");
    increase=1;
 
-while(file.exists()){
-     increase++;
-     file = new File(recordsDir, "List" + increase + ".txt");
-}
+  while(file.exists()){
+        increase++;
+        file = new File(recordsDir, "List" + increase +  ".txt" );
+            
+    }
+  
     }
     else{
         file = new File(recordsDir, listName.getText() + ".txt" );
@@ -299,15 +302,13 @@ while(file.exists()){
      {
         
          String s = fileInput.nextLine();
-         list2.add(s);
+         String f = s.substring(0, s.length()-4);
+         list2.add(f);
      fileList.setItems(list2); //loads a new list with all the names of the saved documents
     
      }
     
   list.clear(); //clears the event list
- list.removeAll();
- eventList.getItems().removeAll();
-  eventList.setItems(null);
   eventList.refresh();
   int aIndex =0;
  while(aIndex != 49)
@@ -317,7 +318,7 @@ while(file.exists()){
  }
  
    
-       
+      
         Refresh();
     }
     
@@ -327,7 +328,7 @@ while(file.exists()){
        
     
     File recordsDir = new File("C://"
-            + "Users/Public/.To-Do List/records");
+            + "Users/Public/Documents/.To-Do List/records");
 if (! recordsDir.exists()) { // checking to see if this directory has been made, if not it will make it. 
     recordsDir.mkdirs();
 }
@@ -337,14 +338,14 @@ if (! recordsDir.exists()) { // checking to see if this directory has been made,
 
 String fileLocation = "C://Users//Public//Documents//.To-Do List//records//";
  String textfile = fileList.getSelectionModel().getSelectedItem();
-    fileLocation = fileLocation + textfile; //Gets the selected file name and adds it to the file location. 
+    fileLocation = fileLocation + textfile + ".txt"; //Gets the selected file name and adds it to the file location. 
 File file = new File(fileLocation);
         String x = file.getName(); //getting the file name so we can delete it from the list later
       
         
         if(file.delete()) 
         { 
-            System.out.println("List deleted successfully."); 
+            System.out.println(x +" deleted successfully."); 
             
         } 
         else
@@ -367,7 +368,7 @@ File file = new File(fileLocation);
     {
      String newS = fileInput.nextLine(); //opens the fileNames document and adds all lines to a linkedlist except for the one we just deleted
         LL.add(newS);
-        System.out.println(x);
+       
         LL.remove(x); 
         
     }
@@ -384,9 +385,11 @@ File file = new File(fileLocation);
     fileInput.close();
  
      list.clear(); //clearing eventlist
-       eventList.getItems().clear(); 
-       eventList.getSelectionModel().clearSelection();
+     
        eventList.setItems(list);
+       fileList.setItems(list2);
+       fileList.refresh();
+        showFile(e);
         
         
     }
@@ -394,7 +397,7 @@ File file = new File(fileLocation);
     private void Refresh(){ // Void variable that refreshes the description box and the localdate
     datePicker.setValue(LocalDate.now());
     descriptionTextField.setText(null);
-    listName.setText(null);
+    listName.setText("");
     }
 
    
